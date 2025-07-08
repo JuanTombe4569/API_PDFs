@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-import fitz  # PyMuPDF
+import fitz
+import os
 
 app = Flask(__name__)
 
@@ -15,7 +16,7 @@ def extract_text():
 
     try:
         doc = fitz.open(stream=file.read(), filetype="pdf")
-        first_page = doc.load_page(0)  # Página 0 = primera página
+        first_page = doc.load_page(0)
         text = first_page.get_text()
         return jsonify({'text': text})
     except Exception as e:
@@ -27,4 +28,5 @@ def home():
     return "PDF Text Extractor API - Flask is running.", 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
