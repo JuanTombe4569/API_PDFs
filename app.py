@@ -3,7 +3,7 @@ import fitz  # PyMuPDF
 
 app = Flask(__name__)
 
-@app.route('/extract-text', methods=['POST'])
+@app.route('/extraer_texto', methods=['POST'])
 def extract_text():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in request'}), 400
