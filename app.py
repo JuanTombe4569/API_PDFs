@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route('/extraer_texto', methods=['POST'])
 def extract_text():
+    
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in request'}), 400
 
@@ -14,8 +15,13 @@ def extract_text():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
+    if 'file' in request.files:          
+        pdf_bytes = request.files['file'].read()
+    else:                                
+        pdf_bytes = request.get_data()
+
     try:
-        doc = fitz.open(stream=file.read(), filetype="pdf")
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
         first_page = doc.load_page(0)
         text = first_page.get_text()
         return jsonify({'text': text}), 200, {'Content-Type': 'application/json'}
