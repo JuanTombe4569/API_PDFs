@@ -6,14 +6,6 @@ app = Flask(__name__)
 
 @app.route('/extraer_texto', methods=['POST'])
 def extract_text():
-    
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part in request'}), 400
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
 
     if 'file' in request.files:          
         pdf_bytes = request.files['file'].read()
