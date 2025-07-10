@@ -18,7 +18,7 @@ def extract_text():
         doc = fitz.open(stream=file.read(), filetype="pdf")
         first_page = doc.load_page(0)
         text = first_page.get_text()
-        return jsonify({'text': text})
+        return jsonify({'text': text}), 200, {'Content-Type': 'application/json'}
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
